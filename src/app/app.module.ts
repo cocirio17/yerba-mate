@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +9,8 @@ import { YerbaContactosComponent } from './yerba-contactos/yerba-contactos.compo
 import { YerbaYerbasComponent } from './yerba-yerbas/yerba-yerbas.component';
 import { YerbaCarritoComponent } from './yerba-carrito/yerba-carrito.component';
 import { InputNumeroComponent } from './input-numero/input-numero.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -18,15 +20,15 @@ import { InputNumeroComponent } from './input-numero/input-numero.component';
     YerbaYerbasComponent,
     YerbaCarritoComponent,
     InputNumeroComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule  
   ],
-  providers: [
-    provideClientHydration(withEventReplay())
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

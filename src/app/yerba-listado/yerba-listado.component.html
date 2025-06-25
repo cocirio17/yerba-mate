@@ -4,7 +4,6 @@
   <div class="row g-4">
     <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let producto of productos">
       <div class="card h-100 shadow-sm border-0 custom-card position-relative">
-
         <!-- Badge de oferta -->
         <span *ngIf="producto.oferta" class="badge bg-danger position-absolute top-0 start-0 m-2">
           Oferta
@@ -36,24 +35,32 @@
           <!-- Precio y oferta -->
           <div class="mb-3">
             <span *ngIf="producto.oferta; else precioNormal">
-              <span class="text-muted text-decoration-line-through me-2">{{ producto.precio | currency}}</span>
+              <span class="text-muted text-decoration-line-through me-2">{{ producto.precio | currency }}</span>
               <span class="text-success fw-bold">$ {{ producto.precio * 0.9 | currency }}</span>
-              <!-- 10% de descuento -->
             </span>
             <ng-template #precioNormal>
-              <h6 class="text-success fw-bold">{{ producto.precio | currency}}</h6>
+              <h6 class="text-success fw-bold">{{ producto.precio | currency }}</h6>
             </ng-template>
           </div>
 
-          <app-input-numero [(cantidad)]="producto.cantidad" [max]="producto.stock" [min]="0">
-          </app-input-numero>
-          
-          <!-- Botón -->
-          <button class="btn w-100 mt-auto"
-            [ngClass]="producto.stock > 0 ? 'btn-outline-success' : 'btn-outline-secondary'"
-            [disabled]="producto.stock === 0" (click)="agregarCarrito(producto)">
-            Agregar al carrito
-          </button>
+          <!-- Input y botón para agregar al carrito -->
+          <div *ngIf="permitirAgregar; else redirigir">
+            <input type="number" [(ngModel)]="producto.cantidad" min="1" [max]="producto.stock" class="form-control mb-2" />
+            <button class="btn w-100 mt-auto"
+                    [ngClass]="producto.stock > 0 ? 'btn-outline-success' : 'btn-outline-secondary'"
+                    [disabled]="producto.stock === 0" 
+                    (click)="agregarCarrito(producto)">
+              Agregar al carrito
+            </button>
+          </div>
+
+          <!-- Alternativa si no se permite agregar -->
+          <ng-template #redirigir>
+            <button class="btn btn-primary w-100 mt-auto" [routerLink]="['/listado']">
+              Ver para comprar
+            </button>
+          </ng-template>
+
         </div>
       </div>
     </div>

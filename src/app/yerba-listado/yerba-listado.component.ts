@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Yerba } from './yerba';
 import { YerbaCarritoService } from '../yerba-carrito.service';
+import { YerbaDatoService } from '../yerba-dato.service';
 
 @Component({
   selector: 'app-yerba-listado',
@@ -9,59 +10,20 @@ import { YerbaCarritoService } from '../yerba-carrito.service';
   styleUrls: ['./yerba-listado.component.scss']
 })
 export class YerbaListadoComponent {
-  productos: Yerba[] = [
-    {
-      nombre: 'Yerba Canarias 500g',
-      tipo: 'Yerba',
-      precio: 7156,
-      stock: 15,
-      imagen: 'assets/img/yerba-canarias.jpg',
-      oferta: false,
-      cantidad: 0
-    },
-    {
-      nombre: 'Yerba Baldo 500g',
-      tipo: 'Yerba',
-      precio: 14921,
-      stock: 20,
-      imagen: 'assets/img/Yerba-Baldo.png',
-      oferta: false,
-      cantidad: 0
-    },
-    {
-      nombre: 'Yerba Canarias Serena 500g',
-      tipo: 'Yerba',
-      precio: 8729,
-      stock: 0,
-      imagen: 'assets/img/Canarias-Serena.png',
-      oferta: true,
-      cantidad: 0
-    },
-    {
-      nombre: 'Yerba Rei Verde Premium Negra',
-      tipo: 'Yerba',
-      precio: 14603,
-      stock: 30,
-      imagen: 'assets/img/Yerba-Rei-Verde-Premium-Negra.png',
-      oferta: false,
-      cantidad: 0
-    },
-    {
-      nombre: 'Yerba Rei Verde 500g',
-      tipo: 'Yerba',
-      precio: 7308,
-      stock: 8,
-      imagen: 'assets/img/Yerba-Rei-Verde.png',
-      oferta: true,
-      cantidad: 0
-    }
-  ];
-
-
-  constructor(private carrito: YerbaCarritoService) { }
+  @Input() productos: Yerba[] = [];
+  @Input() filtrarOferta: boolean = false; // Nueva propiedad para saber si filtrar por oferta
+  constructor(private carrito: YerbaCarritoService, private dataServicio: YerbaDatoService) { }
 
   ngOnInit(): void {
-    // Restaurar stock cuando se elimina del carrito
+    this.dataServicio.traerTodo().subscribe(yerba => {
+      // Si filtrarOferta es verdadero, solo mostrar los productos en oferta
+      if (this.filtrarOferta) {
+        this.productos = yerba.filter(producto => producto.oferta);
+      } else {
+        this.productos = yerba; // De lo contrario, mostrar todos
+      }
+    });
+
     this.carrito.productoEliminado$.subscribe(productoEliminado => {
       const original = this.productos.find(p => p.nombre === productoEliminado.nombre);
       if (original) {
@@ -83,5 +45,6 @@ export class YerbaListadoComponent {
     producto.stock -= producto.cantidad;
     producto.cantidad = 0;
   }
-}
 
+  @Input() permitirAgregar: boolean = false;
+}
