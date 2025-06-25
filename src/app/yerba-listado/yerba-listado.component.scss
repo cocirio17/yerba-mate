@@ -1,0 +1,25 @@
+.custom-card {
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(61, 214, 61, 0.15);
+  }
+}
+
+.product-img {
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.placeholder-img {
+  height: 200px;
+  background-color: #e6f4ea;
+  color: #6c757d;
+  font-size: 1.1rem;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}

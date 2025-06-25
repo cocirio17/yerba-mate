@@ -1,0 +1,32 @@
+.about-img {
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+
+  img {
+    border-radius: 1rem;
+    transition: transform 0.4s ease;
+    transform: scale(1);
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 128, 0, 0.2);
+  }
+}
+
+ul {
+  li {
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  i {
+    font-size: 1.1rem;
+  }
+}

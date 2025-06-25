@@ -1,0 +1,61 @@
+<div class="container my-5">
+  <h2 class="text-center mb-5 display-6 text-success">🛒 Carrito de Compras</h2>
+
+  <!-- Usamos 'as lista' para capturar el resultado del async -->
+  <div *ngIf="(carroLista$ | async) as lista">
+    <ng-container *ngIf="lista.length > 0; else carritoVacio">
+
+      <div class="card shadow border-0">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-success text-center">
+              <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of lista" class="text-center">
+                <td class="fw-semibold">{{ item.nombre }}</td>
+                <td>{{ item.precio | currency }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td class="text-success fw-bold">{{ item.precio * item.cantidad | currency }}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-danger rounded-circle" (click)="eliminarProducto(item)" title="Eliminar">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card-footer bg-light d-flex justify-content-between align-items-center py-3 px-4">
+          <button class="btn btn-outline-danger" (click)="vaciarCarrito()">
+            <i class="bi bi-x-circle me-1"></i> Vaciar carrito
+          </button>
+
+          <h5 class="mb-0 text-success fw-bold">
+            Total: {{ total | currency }}
+          </h5>
+        </div>
+      </div>
+
+    </ng-container>
+  </div>
+
+  <!-- Template si el carrito está vacío -->
+  <ng-template #carritoVacio>
+    <div class="alert alert-info text-center py-5 shadow-sm mt-4">
+      <i class="bi bi-cart-x display-4 d-block mb-3"></i>
+      <p class="lead">Tu carrito está vacío</p>
+      <p>¡Agregá productos para comenzar!</p>
+      <a routerLink="/home" class="btn btn-outline-success mt-2">
+        <i class="bi bi-arrow-left me-1"></i> Volver al Inicio
+      </a>
+    </div>
+  </ng-template>
+</div>

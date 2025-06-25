@@ -1,0 +1,81 @@
+// nav
+.custom-navbar {
+  background: linear-gradient(90deg, #e0f8e6, #b8e3c4);
+  padding: 0.8rem 1.5rem;
+  border-radius: 0 0 16px 16px;
+
+  .navbar-brand {
+    font-size: 1.4rem;
+    color: #2f5d34;
+  }
+
+  .nav-link {
+    color: #2f5d34;
+    margin-right: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+
+    &:hover, &.active {
+      color: #1e7d3c;
+    }
+  }
+
+  .search-input {
+    border-radius: 20px;
+    border: 1px solid #aad4b0;
+    padding: 0.3rem 1rem;
+    background-color: #f0fdf4;
+    transition: box-shadow 0.3s;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.3);
+      border-color: #2e7d32;
+    }
+  }
+  .nav-link.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+}
+table {
+  th, td {
+    vertical-align: middle;
+    text-align: center;
+  }
+}
+
+// footer 
+.custom-footer {
+  background-color: #f8f9fa;
+
+  .footer-links {
+    li {
+      margin-bottom: 0.5rem;
+
+      a {
+        color: #6c757d;
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #198754; // Bootstrap success
+        }
+      }
+    }
+  }
+
+  .social-icon {
+    font-size: 1.4rem;
+    color: #198754;
+    transition: transform 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      transform: scale(1.15);
+      color: #0a3622; // dark success
+    }
+  }
+
+  hr {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+}
