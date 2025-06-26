@@ -1,4 +1,15 @@
-<div class="container my-4">
-    <h2 class="text-center mb-4">Productos en Oferta</h2>
-    <app-yerba-listado [productos]="productosEnOferta" [filtrarOferta]="true"></app-yerba-listado>
+<div class="container my-5 seccion-oferta p-4 rounded-4">
+  <div class="text-center mb-4">
+    <h2 class="titulo-oferta">
+      <i class="bi bi-fire me-2 text-warning fs-3"></i>
+      Productos en Oferta
+      <div class="subtitulo">¡Aprovechá los mejores precios del mate!</div>
+    </h2>
+  </div>
+  <app-yerba-listado [productos]="productosEnOferta" [filtrarOferta]="true">
+  </app-yerba-listado>
+
+
+  <app-consejos>
+  </app-consejos>
 </div>

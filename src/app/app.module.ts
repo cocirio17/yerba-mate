@@ -11,6 +11,7 @@ import { YerbaCarritoComponent } from './yerba-carrito/yerba-carrito.component';
 import { InputNumeroComponent } from './input-numero/input-numero.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+import { ConsejosComponent } from './consejos/consejos.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HomeComponent } from './home/home.component';
     YerbaYerbasComponent,
     YerbaCarritoComponent,
     InputNumeroComponent,
-    HomeComponent
+    HomeComponent,
+    ConsejosComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,73 @@
+.consejos-materos {
+  background: #f9fbe7;
+  border-top: 4px solid #a5d6a7;
+  border-radius: 12px;
+  padding: 2rem 1rem;
+  animation: aparecer 0.5s ease-in;
+
+  h2 {
+    font-size: 2rem;
+    color: #388e3c;
+    position: relative;
+
+    &::after {
+      content: "";
+      width: 60px;
+      height: 4px;
+      background-color: #a5d6a7;
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+  }
+
+  .card-title {
+    font-size: 1.15rem;
+    color: #2e7d32;
+  }
+
+  .card-text {
+    font-size: 0.95rem;
+    color: #4f4f4f;
+  }
+
+  .consejo-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid #c8e6c9;
+    border-radius: 10px;
+
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0.5rem 1rem rgba(76, 175, 80, 0.15);
+    }
+  }
+
+  @media (max-width: 576px) {
+    padding: 1.5rem 0.5rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

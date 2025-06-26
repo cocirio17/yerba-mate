@@ -1,0 +1,56 @@
+seccion-oferta {
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  background-image: url('/assets/img/hojas-fondo.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: lighten;
+  border: 2px dashed #66bb6a;
+  box-shadow: 0 0 12px rgba(102, 187, 106, 0.3);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.4);
+  }
+}
+
+
+.titulo-oferta {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2e7d32;
+  position: relative;
+  display: inline-block;
+  animation: entrarDesdeArriba 0.6s ease-out;
+
+  .subtitulo {
+    font-size: 0.9rem;
+    color: #6b8e23;
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  &::after {
+    content: '';
+    width: 80%;
+    height: 4px;
+    background-color: #a5d6a7;
+    position: absolute;
+    bottom: -10px;
+    left: 10%;
+    border-radius: 2px;
+  }
+}
+
+// Animación de entrada
+@keyframes entrarDesdeArriba {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
