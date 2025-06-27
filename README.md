@@ -1,59 +1,86 @@
-# YerbaMate
+# 🌿 **YerbaShop** 🍃
+ 
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+![YerbaShop Logo](assets/img/logo.png)
 
-## Development server
+**YerbaShop** es una tienda en línea construida con **Angular**. Esta aplicación permite a los usuarios explorar una variedad de yerbas, agregar productos a su carrito, realizar compras, y consultar consejos sobre la mejor manera de preparar su mate.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 🌟 **Características** ✨
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- 🛍️ **Explora productos**: Visualiza productos en la tienda y conoce sus características.
+- 🛒 **Carrito de compras**: Añade productos al carrito, elimina productos y calcula el total.
+- 💥 **Ofertas**: Filtra los productos en oferta directamente desde la página principal.
+- 📚 **Consejos**: Accede a consejos útiles sobre los distintos tipos de yerba y cómo afectan el sabor del mate.
+- ✅ **Proceso de compra**: Completa un formulario con tus datos y confirma la compra.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🛠️ **Tecnologías utilizadas** 🚀
 
-```bash
-ng generate component component-name
-```
+- 🔹 **Angular**: Framework principal para el desarrollo de la aplicación.
+- 🔸 **RxJS**: Para manejar la reactividad y el flujo de datos.
+- 🔹 **Bootstrap**: Framework CSS utilizado para el diseño responsivo y la interfaz de usuario.
+- 🔸 **HttpClient**: Para realizar peticiones HTTP y obtener datos de una API externa.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 🖥️ **Desarrollo** 🧑‍💻
 
-## Building
+### **Componentes Principales** 🔑
 
-To build the project run:
+- 🏠 **HomeComponent**: Página principal con los productos en oferta.
+- 📋 **YerbaListadoComponent**: Muestra la lista de productos de yerba.
+- 📦 **YerbaDetalleComponent**: Muestra los detalles de un producto específico.
+- 🛒 **YerbaCarritoComponent**: Gestiona el carrito de compras.
+- ✅ **YerbaComprarComponent**: Finaliza la compra del carrito.
+- 🧑‍🏫 **ConsejosComponent**: Muestra consejos sobre yerba y su preparación.
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### **Servicios** 💻
 
-## Running unit tests
+- 🔹 **YerbaDatoService**: Servicio para obtener los productos desde la API.
+- 🔸 **YerbaCarritoService**: Servicio para manejar el carrito de compras.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+### **Manejo de Estado** 💡
 
-## Running end-to-end tests
+- Utiliza **BehaviorSubject** de RxJS para manejar el estado de la lista de productos y la cantidad total del carrito en tiempo real.
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
+## 🌍 **Rutas** 🛣️
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+- **/home**: Página de inicio con productos en oferta.
+- **/listado**: Página con todos los productos disponibles.
+- **/detalle/:id**: Página con los detalles de un producto específico.
+- **/carrito**: Página para ver el carrito de compras.
+- **/comprar**: Página para confirmar la compra.
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🤝 **Contribuciones** 🙌
+
+Si deseas contribuir al proyecto, por favor sigue estos pasos:
+
+1. 🍴 Haz un **fork** del repositorio.
+2. 🌱 Crea una rama para tu funcionalidad (`git checkout -b feature/nueva-funcionalidad`).
+3. ✏️ Realiza tus cambios.
+4. 💾 Haz un **commit** de tus cambios (`git commit -am 'Añadir nueva funcionalidad'`).
+5. 📤 **Sube** tus cambios a tu repositorio (`git push origin feature/nueva-funcionalidad`).
+6. 📝 Crea un **Pull Request**.
+
+---
+
+## 📝 **Licencia** 📄
+
+Este proyecto está bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+---
+
+## 💬 **Contacta con nosotros** 📧
+
+Si tienes alguna duda o sugerencia, no dudes en [contactarnos](mailto:soporte@yerbashop.com). ¡Estamos aquí para ayudarte! 😊
