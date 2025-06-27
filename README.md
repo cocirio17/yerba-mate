@@ -1,7 +1,7 @@
 # 🌿 **YerbaShop** 🍃
  
 
-![YerbaShop Logo](assets/img/logo.png)
+![YerbaShop Logo](public/assets/img/logo.png)
 
 **YerbaShop** es una tienda en línea construida con **Angular**. Esta aplicación permite a los usuarios explorar una variedad de yerbas, agregar productos a su carrito, realizar compras, y consultar consejos sobre la mejor manera de preparar su mate.
 
