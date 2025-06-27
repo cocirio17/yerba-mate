@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 
+/**
+ * Componente que gestiona la página de consejos sobre yerba.
+ * Muestra una lista de consejos relacionados con los diferentes tipos de yerba.
+ */
 @Component({
   selector: 'app-consejos',
   standalone: false,
@@ -7,6 +11,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./consejos.component.scss']
 })
 export class ConsejosComponent {
+  /** Lista de consejos relacionados con la yerba */
   consejos = [
     {
       titulo: 'Yerba con palo vs. sin palo: ¿cuál elegir?',
@@ -25,5 +30,4 @@ export class ConsejosComponent {
       descripcion: 'La yerba estacionada (reposada de 9 a 24 meses) tiene sabor más suave y parejo. La yerba verde, sin estacionar, puede resultar más amarga, agresiva o inestable. La estacionada suele ser más amable con el estómago.'
     }
   ];
-
 }
