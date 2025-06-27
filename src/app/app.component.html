@@ -1,21 +1,24 @@
-<nav class="navbar navbar-expand-lg custom-navbar">
-  <div class="container align-items-center">
+<!-- Encabezado superior -->
+<div class="top-bar text-center py-3">
+  <a class="navbar-brand d-inline-flex align-items-center justify-content-center" routerLink="/">
+    <img src="assets/img/logo.png" alt="Logo Yerba" width="120" height="120" class="me-2 logo-img">
+    <span class="brand-title">YerbaShop</span>
+  </a>
+</div>
 
-    <!-- Logo + Nombre -->
-    <a class="navbar-brand d-flex align-items-center" routerLink="/">
-      <img src="assets/img/logo.png" alt="Logo Yerba" width="48" height="48" class="me-3 logo-img">
-      <span class="brand-title">YerbaShop</span>
-    </a>
+<!-- Barra de navegación inferior -->
+<nav class="navbar navbar-expand-lg navbar-white custom-navbar py-2">
+  <div class="container justify-content-between">
 
-    <!-- Botón hamburguesa -->
+    <!-- Menú hamburguesa -->
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
       data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Menú -->
-    <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-      <ul class="navbar-nav">
+    <!-- Enlaces -->
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav gap-4">
         <li class="nav-item">
           <a class="nav-link" routerLink="/" routerLinkActive="active">Inicio</a>
         </li>
@@ -26,58 +29,54 @@
           <a class="nav-link" routerLink="/contacto" routerLinkActive="active">Contacto</a>
         </li>
       </ul>
+    </div>
 
-      <!-- Carrito -->
-      <div class="d-flex align-items-center gap-3 position-relative">
-        <button class="btn btn-outline-success position-relative" (click)="toggleCarrito()" title="Carrito de compras">
-          <i class="bi bi-cart3 fs-5"></i>
-          <span *ngIf="cantidadEnCarrito > 0"
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            {{ cantidadEnCarrito }}
-          </span>
-        </button>
+    <!-- Carrito -->
+    <div class="d-flex align-items-center gap-3 position-relative">
+      <button class="btn btn-outline-light position-relative" (click)="toggleCarrito()" title="Carrito de compras">
+        <i class="bi bi-cart3 fs-5"></i>
+        <span *ngIf="cantidadEnCarrito > 0"
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          {{ cantidadEnCarrito }}
+        </span>
+      </button>
 
-        <!-- Carrito desplegable -->
-        <div *ngIf="mostrarCarrito" class="position-absolute" style="top: 100%; right: 0; z-index: 1050; margin-top: 0.5rem;">
-          <div class="card shadow-sm border-0" style="width: 300px;">
-            <!-- Header -->
-            <div class="card-header bg-success text-white py-2 d-flex justify-content-between align-items-center">
-              <span>Carrito</span>
-              <button class="btn-close btn-close-white btn-sm" (click)="mostrarCarrito = false" aria-label="Cerrar"></button>
-            </div>
-            <!-- Contenido -->
-            <div style="max-height: 340px; overflow-y: auto;">
-              <div class="card-body p-3" *ngIf="carrito.listaCarrito.value.length > 0; else carritoVacio">
-                <div *ngFor="let item of carrito.listaCarrito.value" class="d-flex justify-content-between small mb-2">
-                  <div>
-                    <strong>{{ item.nombre }}</strong><br>
-                    <span class="text-muted">x{{ item.cantidad }}</span>
-                  </div>
-                  <span>{{ item.precio * item.cantidad | currency }}</span>
+      <!-- Carrito desplegable -->
+      <div *ngIf="mostrarCarrito" class="position-absolute" style="top: 100%; right: 0; z-index: 1050; margin-top: 0.5rem;">
+        <div class="card shadow-sm border-0" style="width: 300px;">
+          <div class="card-header bg-success text-white py-2 d-flex justify-content-between align-items-center">
+            <span>Carrito</span>
+            <button class="btn-close btn-close-white btn-sm" (click)="mostrarCarrito = false" aria-label="Cerrar"></button>
+          </div>
+          <div style="max-height: 340px; overflow-y: auto;">
+            <div class="card-body p-3" *ngIf="carrito.listaCarrito.value.length > 0; else carritoVacio">
+              <div *ngFor="let item of carrito.listaCarrito.value" class="d-flex justify-content-between small mb-2">
+                <div>
+                  <strong>{{ item.nombre }}</strong><br>
+                  <span class="text-muted">x{{ item.cantidad }}</span>
                 </div>
-                <hr class="my-2">
-                <a routerLink="/carrito" class="btn btn-sm btn-outline-success w-100">Ir al carrito</a>
+                <span>{{ item.precio * item.cantidad | currency }}</span>
               </div>
-              <ng-template #carritoVacio>
-                <p class="text-muted text-center small py-3">Tu carrito está vacío</p>
-              </ng-template>
+              <hr class="my-2">
+              <a routerLink="/carrito" class="btn btn-sm btn-outline-success w-100">Ir al carrito</a>
             </div>
+            <ng-template #carritoVacio>
+              <p class="text-muted text-center small py-3">Tu carrito está vacío</p>
+            </ng-template>
           </div>
         </div>
-
       </div>
     </div>
+
   </div>
 </nav>
 
 
 <!-- ---------------contenido---------- -->
+
 <div class="contenedor-listado">
   <router-outlet ></router-outlet>
 </div>
-
-
-
 
 <!-- ---------footer----------------- -->
 <footer class="custom-footer bg-light text-dark pt-5 pb-4 mt-5 border-top">
