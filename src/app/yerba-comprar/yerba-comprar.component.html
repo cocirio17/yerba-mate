@@ -1,0 +1,48 @@
+<div class="container my-5">
+  <h2 class="text-center text-success mb-4">🧾 Confirmar Compra</h2>
+
+  <!-- Carrito resumen -->
+  <app-yerba-carrito></app-yerba-carrito>
+
+  <!-- Formulario cliente -->
+  <form [formGroup]="clienteForm" (ngSubmit)="confirmarCompra()" class="cliente-form bg-light p-4 rounded shadow-sm">
+    <h4 class="mb-4">Datos del Cliente</h4>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <input class="form-control" formControlName="nombre" placeholder="Nombre *" />
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" formControlName="apellido" placeholder="Apellido *" />
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" formControlName="dni" placeholder="DNI *" />
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" formControlName="email" placeholder="Email *" />
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" formControlName="telefono" placeholder="Teléfono *" />
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" formControlName="direccion" placeholder="Dirección *" />
+      </div>
+      <div class="col-md-6">
+        <select class="form-select" formControlName="formaPago">
+          <option value="">Seleccionar forma de pago *</option>
+          <option value="efectivo">Efectivo</option>
+          <option value="tarjeta">Tarjeta de crédito</option>
+          <option value="transferencia">Transferencia bancaria</option>
+          <option value="mercadopago">Mercado Pago</option>
+        </select>
+      </div>
+      <div class="col-md-12">
+        <textarea class="form-control" formControlName="comentario" rows="3" placeholder="Comentario (opcional)"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-4 px-4">
+      <i class="bi bi-check2-circle me-2"></i> Confirmar Compra
+    </button>
+  </form>
+</div>

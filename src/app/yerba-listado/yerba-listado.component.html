@@ -1,6 +1,4 @@
 <div class="container my-4">
-  
-
   <div class="row g-4">
     <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let producto of productos">
       <div class="card h-100 shadow-sm border-0 custom-card position-relative">
@@ -25,13 +23,16 @@
           <h5 class="card-title">{{ producto.nombre }}</h5>
 
           <!-- Stock -->
-          <p *ngIf="producto.stock === 0" class="text-danger fw-semibold">
-            <i class="bi bi-exclamation-circle me-1"></i> Sin stock disponible
-          </p>
-          <p *ngIf="producto.stock > 0" class="text-muted mb-1">
-            <i class="bi bi-box"></i> Stock: {{ producto.stock }}
-          </p>
-
+          <div class="stock-badge mt-2">
+            <span *ngIf="producto.stock === 0"
+              class="badge bg-danger-subtle text-danger d-flex align-items-center gap-2 px-3 py-2 rounded-pill">
+              <i class="bi bi-x-octagon-fill"></i> Sin stock
+            </span>
+            <span *ngIf="producto.stock > 0"
+              class="badge bg-success-subtle text-success d-flex align-items-center gap-2 px-3 py-2 rounded-pill">
+              <i class="bi bi-check-circle-fill"></i> Stock disponible
+            </span>
+          </div>
           <!-- Precio y oferta -->
           <div class="mb-3">
             <span *ngIf="producto.oferta; else precioNormal">
@@ -43,24 +44,10 @@
             </ng-template>
           </div>
 
-          <!-- Input y botón para agregar al carrito -->
-          <div *ngIf="permitirAgregar; else redirigir">
-            <input type="number" [(ngModel)]="producto.cantidad" min="1" [max]="producto.stock" class="form-control mb-2" />
-            <button class="btn w-100 mt-auto"
-                    [ngClass]="producto.stock > 0 ? 'btn-outline-success' : 'btn-outline-secondary'"
-                    [disabled]="producto.stock === 0" 
-                    (click)="agregarCarrito(producto)">
-              Agregar al carrito
-            </button>
-          </div>
-
-          <!-- Alternativa si no se permite agregar -->
-          <ng-template #redirigir>
-            <button class="btn btn-primary w-100 mt-auto" [routerLink]="['/listado']">
-              Ver para comprar
-            </button>
-          </ng-template>
-
+          <!-- Ver detalles del producto -->
+          <a class="btn btn-primary w-100 mt-auto custom-btn" [routerLink]="['/producto', producto.id]">
+            Ver detalles del producto
+          </a>
         </div>
       </div>
     </div>

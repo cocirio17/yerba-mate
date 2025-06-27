@@ -1,0 +1,38 @@
+.cantidad-selector {
+  .btn-cantidad {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #28a745;
+    background-color: white;
+    color: #28a745;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: #28a745;
+      color: white;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  .cantidad-input {
+    width: 64px;
+    height: 36px;
+    font-weight: 600;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+
+    &:focus {
+      border-color: #28a745;
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+  }
+}

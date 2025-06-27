@@ -1,0 +1,51 @@
+.custom-detalle {
+  background: #fefefe;
+  border: 1px solid #e6e6e6;
+  border-radius: 1rem;
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .badge {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    border: none;
+
+    &:hover {
+      background-color: #218838;
+    }
+  }
+
+  .btn-outline-secondary {
+    border-color: #6c757d;
+
+    &:hover {
+      background-color: #f8f9fa;
+    }
+  }
+
+  app-input-numero {
+    flex: 1 1 auto;
+  }
+}
+.descripcion-producto {
+  background-color: #f9f9f9;
+  border-left: 4px solid #28a745;
+  font-size: 1rem;
+
+  h5 {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  p {
+    color: #333;
+    line-height: 1.6;
+  }
+}
+

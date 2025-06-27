@@ -1,4 +1,3 @@
-// yerba-carrito.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Yerba } from './yerba-listado/yerba';
@@ -8,7 +7,6 @@ import { Yerba } from './yerba-listado/yerba';
 })
 export class YerbaCarritoService {
   private _listaCarrito: Yerba[] = [];
-
   listaCarrito: BehaviorSubject<Yerba[]> = new BehaviorSubject<Yerba[]>([]);
   cantidadTotal$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
@@ -44,6 +42,17 @@ export class YerbaCarritoService {
     this._actualizarEstado();
   }
 
+  // Obtener el total de la compra (precio * cantidad de cada producto)
+  obtenerTotal(): number {
+    return this._listaCarrito.reduce((total, p) => total + (p.precio * p.cantidad), 0);
+  }
+
+  // Obtener los productos en el carrito
+  obtenerProductos(): Yerba[] {
+    return this._listaCarrito;
+  }
+
+  // Obtener la cantidad total de productos en el carrito
   getCantidadTotal(): number {
     return this._listaCarrito.reduce((total, p) => total + p.cantidad, 0);
   }

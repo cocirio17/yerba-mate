@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-
 @Component({
   selector: 'app-input-numero',
   standalone: false,
@@ -8,7 +7,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./input-numero.component.scss']
 })
 export class InputNumeroComponent {
-   @Input() cantidad: number = 0;
+  @Input() cantidad: number = 0;
   @Input() max: number = Infinity;
   @Input() min: number = 0;
 

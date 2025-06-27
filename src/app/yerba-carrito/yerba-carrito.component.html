@@ -24,7 +24,8 @@
                 <td>{{ item.cantidad }}</td>
                 <td class="text-success fw-bold">{{ item.precio * item.cantidad | currency }}</td>
                 <td>
-                  <button class="btn btn-sm btn-outline-danger rounded-circle" (click)="eliminarProducto(item)" title="Eliminar">
+                  <button class="btn btn-sm btn-outline-danger rounded-circle" (click)="eliminarProducto(item)"
+                    title="Eliminar">
                     <i class="bi bi-trash"></i>
                   </button>
                 </td>
@@ -33,14 +34,19 @@
           </table>
         </div>
 
-        <div class="card-footer bg-light d-flex justify-content-between align-items-center py-3 px-4">
+        <div class="card-footer bg-light d-flex justify-content-between align-items-center py-3 px-4 flex-wrap gap-2">
           <button class="btn btn-outline-danger" (click)="vaciarCarrito()">
             <i class="bi bi-x-circle me-1"></i> Vaciar carrito
           </button>
 
-          <h5 class="mb-0 text-success fw-bold">
+          <h5 class="mb-0 text-success fw-bold me-auto">
             Total: {{ total | currency }}
           </h5>
+
+          <!-- Botón de Comprar -->
+          <a *ngIf="showBuyButton" routerLink="/comprar" class="btn btn-success">
+            <i class="bi bi-bag-check me-1"></i> Comprar
+          </a>
         </div>
       </div>
 

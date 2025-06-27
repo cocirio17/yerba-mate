@@ -18,15 +18,28 @@
   }
 }
 
-ul {
-  li {
-    font-size: 1.05rem;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
+.custom-about-section {
+  h2 {
+    font-size: 2.5rem;
   }
 
-  i {
+  p {
     font-size: 1.1rem;
+  }
+
+  .about-highlights {
+    i {
+      min-width: 24px;
+    }
+
+    span {
+      font-size: 1.05rem;
+      color: #444;
+    }
+  }
+
+  .btn-success {
+    font-weight: 600;
+    font-size: 1.05rem;
   }
 }

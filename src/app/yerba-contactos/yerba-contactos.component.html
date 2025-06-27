@@ -1,28 +1,45 @@
 <div class="container my-5">
-  <div class="row align-items-center">
+  <div class="row align-items-center gy-4 custom-about-section">
     <!-- Imagen -->
-    <div class="col-md-6 mb-4 mb-md-0">
+    <div class="col-lg-6">
       <div class="about-img shadow-sm rounded overflow-hidden">
-        <img src="assets/img/Nosotros.jpg" alt="Mate sobre fondo natural" class="img-fluid" />
+        <img src="assets/img/Nosotros.jpg" alt="Mate sobre fondo natural" class="img-fluid w-100" />
       </div>
     </div>
 
-    <!-- Texto -->
-    <div class="col-md-6">
-      <h2 class="mb-3 text-success">Sobre Nosotros</h2>
-      <p class="lead">
-        En <strong>YerbaMateShop</strong> celebramos el ritual del mate. Seleccionamos yerbas tradicionales, suaves, intensas y compuestas, directamente desde los mejores productores.
+    <!-- Contenido -->
+    <div class="col-lg-6">
+      <h2 class="mb-3 text-success fw-bold display-5">Sobre Nosotros</h2>
+      <p class="lead text-muted">
+        En <strong>YerbaMateShop</strong> celebramos el ritual del mate. Nos especializamos en seleccionar yerbas de la mejor calidad:
+        tradicionales, suaves, intensas y compuestas, provenientes directamente de productores destacados.
       </p>
-      <p>
-        Nuestro propósito es llevarte no solo productos, sino también historia, cultura y comunidad. Ya sea que estés empezando o seas matero experto, ¡tenemos algo para vos!
+      <p class="text-secondary">
+        Más que una tienda, somos un espacio para quienes valoran la historia, la cultura y la comunidad que rodea al mate. Ya seas principiante o un experto matero,
+        ¡tenemos algo para vos!
       </p>
-      <ul class="list-unstyled mt-3">
-        <li><i class="bi bi-leaf-fill text-success me-2"></i> Yerbas orgánicas y sin TACC</li>
-        <li><i class="bi bi-truck text-success me-2"></i> Envíos a todo el país</li>
-        <li><i class="bi bi-gift text-success me-2"></i> Promociones cada semana</li>
-      </ul>
-      <a routerLink="/listado" class="btn btn-success mt-4">
-        <i class="bi bi-cart4 me-1"></i> Ver productos
+
+      <div class="about-highlights row mt-4">
+        <div class="col-12 col-sm-6 mb-3 d-flex align-items-start">
+          <i class="bi bi-leaf-fill text-success fs-4 me-3"></i>
+          <span>Yerbas orgánicas y sin TACC</span>
+        </div>
+        <div class="col-12 col-sm-6 mb-3 d-flex align-items-start">
+          <i class="bi bi-truck text-success fs-4 me-3"></i>
+          <span>Envíos a todo el país</span>
+        </div>
+        <div class="col-12 col-sm-6 mb-3 d-flex align-items-start">
+          <i class="bi bi-gift text-success fs-4 me-3"></i>
+          <span>Promociones cada semana</span>
+        </div>
+        <div class="col-12 col-sm-6 mb-3 d-flex align-items-start">
+          <i class="bi bi-people-fill text-success fs-4 me-3"></i>
+          <span>Comunidad matera apasionada</span>
+        </div>
+      </div>
+
+      <a routerLink="/listado" class="btn btn-lg btn-success mt-3 px-4 shadow-sm">
+        <i class="bi bi-cart4 me-2"></i> Ver productos
       </a>
     </div>
   </div>

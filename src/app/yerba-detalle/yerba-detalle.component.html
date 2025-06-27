@@ -1,0 +1,69 @@
+<div class="container py-5 mt-3" *ngIf="yerba">
+  <div class="row align-items-center gy-5 shadow-lg rounded p-4 bg-white custom-detalle">
+
+    <!-- Imagen -->
+    <div class="col-md-5">
+      <img *ngIf="yerba.imagen; else noImage" [src]="yerba.imagen" [alt]="yerba.nombre"
+        class="img-fluid rounded-3 shadow-sm w-100 border" />
+      <ng-template #noImage>
+        <div class="bg-light d-flex justify-content-center align-items-center rounded-3 shadow-sm border"
+          style="height: 300px;">
+          <span class="text-muted">Sin imagen disponible</span>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Detalles -->
+    <div class="col-md-7">
+      <h2 class="text-success fw-bold display-6 mb-3">{{ yerba.nombre }}</h2>
+
+      <p class="mb-3 text-secondary fs-5">
+        <i class="bi bi-tag-fill me-2 text-success"></i><strong>Tipo:</strong> {{ yerba.tipo }}
+      </p>
+
+      <!-- Precio -->
+      <div class="mb-4">
+        <ng-container *ngIf="yerba.oferta; else precioNormal">
+          <span class="text-muted text-decoration-line-through me-2 fs-5">{{ yerba.precio | currency }}</span>
+          <span class="text-success fs-4 fw-bold">{{ yerba.precio * 0.9 | currency }}</span>
+          <span class="badge bg-danger ms-2 px-3 py-2 rounded-pill">Oferta</span>
+        </ng-container>
+        <ng-template #precioNormal>
+          <span class="text-success fs-4 fw-bold">{{ yerba.precio | currency }}</span>
+        </ng-template>
+      </div>
+
+      <!-- Stock -->
+      <div class="mb-4">
+        <span *ngIf="yerba.stock === 0" class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fs-6">
+          <i class="bi bi-x-octagon me-1"></i> Sin stock
+        </span>
+        <span *ngIf="yerba.stock > 0" class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fs-6">
+          <i class="bi bi-box-seam me-1"></i> Stock disponible: {{ yerba.stock }}
+        </span>
+      </div>
+      
+      <!-- Descripción -->
+      <div class="mb-4 descripcion-producto px-3 py-3 bg-light rounded border">
+        <h5 class="text-secondary mb-2">
+          <i class="bi bi-info-circle me-2 text-success"></i>Descripción del producto
+        </h5>
+        <p class="mb-0 text-dark fs-6">{{ yerba.descripcion }}</p>
+      </div>
+
+      <!-- Agregar al carrito -->
+      <div class="d-flex flex-column flex-sm-row align-items-center gap-3 mb-4">
+        <app-input-numero [(cantidad)]="yerba.cantidad" [min]="1" [max]="yerba.stock"></app-input-numero>
+        <button class="btn btn-lg btn-success px-4 shadow-sm" [disabled]="yerba.stock === 0"
+          (click)="agregarCarrito(yerba)">
+          <i class="bi bi-cart-plus me-2"></i> Agregar al carrito
+        </button>
+      </div>
+
+      <!-- Volver al listado -->
+      <a routerLink="/listado" class="btn btn-outline-secondary px-4">
+        <i class="bi bi-arrow-left me-2"></i> Volver al listado
+      </a>
+    </div>
+  </div>
+</div>

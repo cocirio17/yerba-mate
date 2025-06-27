@@ -4,3 +4,25 @@ table {
     text-align: center;
   }
 }
+.btn-comprar {
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 6px rgba(40, 167, 69, 0.2);
+
+  &:hover {
+    background-color: #218838;
+  }
+
+  i {
+    font-size: 1.1rem;
+  }
+}
+
+.card-footer {
+  flex-wrap: wrap;
+
+  .btn {
+    min-width: 120px;
+  }
+}

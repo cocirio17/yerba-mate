@@ -11,7 +11,7 @@ import { YerbaDatoService } from '../yerba-dato.service';
 })
 export class YerbaListadoComponent {
   @Input() productos: Yerba[] = [];
-  @Input() filtrarOferta: boolean = false; // Nueva propiedad para saber si filtrar por oferta
+  @Input() filtrarOferta: boolean = false; 
   constructor(private carrito: YerbaCarritoService, private dataServicio: YerbaDatoService) { }
 
   ngOnInit(): void {
