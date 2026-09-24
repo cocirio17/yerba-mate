@@ -28,6 +28,60 @@
 
 ## 🖥️ **Desarrollo** 🧑‍💻
 
+### Backend API
+
+The `server/` directory contains the YerbaShop Node.js/Express API. It uses
+Sequelize and supports MySQL (default) or PostgreSQL through environment
+variables. Copy `.env.example` to `.env`, create the configured database, and
+run:
+
+```bash
+npm install
+npm run backend:start
+```
+
+### Docker (MySQL + API + frontend)
+
+Docker Compose starts MySQL 8, the API, and an Nginx-served Angular
+frontend. MySQL data is kept in the `mysql-data` named volume. The API waits
+for MySQL to become healthy, runs the idempotent seed, and then starts.
+
+```bash
+docker compose up --build
+```
+
+Open <http://localhost:8080>. The development seed creates these products and
+the following administrator account:
+
+```text
+Email:    admin@yerbashop.com
+Password: admin123
+```
+
+These credentials and the Compose database password are development defaults;
+change them before using this stack outside local development. To remove the
+database volume and start from an empty database, run
+`docker compose down -v`.
+
+For development, use `npm run backend:dev`. The API listens on port 3000 and
+allows the Angular app at `http://localhost:4200` by default. Endpoints include
+`POST /api/auth/register`, `POST /api/auth/login`, `GET /api/products`,
+`GET /api/products/:id`, authenticated `GET /api/users/me`, and authenticated
+`POST /api/reviews/:productId` (also available as
+`POST /api/reviews/products/:productId` for compatibility).
+
+Admin product create and update endpoints accept `multipart/form-data` with an
+optional `imagen` field. Uploaded images are stored in `server/uploads` and
+served at `/uploads/<filename>`; an existing frontend asset can still be sent
+as the `imagen_url` field.
+
+The product classification schema is also captured in
+`server/migrations/20260923170000-add-product-classification.js`. Run this
+migration with the project's Sequelize migration runner before deploying
+against an existing database; fresh environments are provisioned by the
+model sync during startup. It adds `tipo_corte`, `origen`, `organica`,
+`barbacua`, `saborizada`, and `sabor`.
+
 ### **Componentes Principales** 🔑
 
 - 🏠 **HomeComponent**: Página principal con los productos en oferta.

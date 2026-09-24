@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Yerba } from './yerba';
 import { YerbaCarritoService } from '../yerba-carrito.service';
 import { YerbaDatoService } from '../yerba-dato.service';
+import { AuthService } from '../auth.service';
 
 /**
  * Componente que muestra una lista de productos de tipo Yerba.
@@ -23,9 +24,12 @@ export class YerbaListadoComponent implements OnInit {
   /** Si es true, permite mostrar los controles de agregar al carrito */
   @Input() permitirAgregar: boolean = false;
 
+  @Input() cargarDatos: boolean = true;
+
   constructor(
     private carrito: YerbaCarritoService,
-    private dataServicio: YerbaDatoService
+    private dataServicio: YerbaDatoService,
+    public auth: AuthService
   ) {}
 
   /**
@@ -33,11 +37,13 @@ export class YerbaListadoComponent implements OnInit {
    * También escucha productos eliminados para restaurar stock.
    */
   ngOnInit(): void {
-    this.dataServicio.traerTodo().subscribe((yerbas: Yerba[]) => {
-      this.productos = this.filtrarOferta
-        ? yerbas.filter(p => p.oferta)
-        : yerbas;
-    });
+    if (this.cargarDatos) {
+      this.dataServicio.traerTodo().subscribe((yerbas: Yerba[]) => {
+        this.productos = this.filtrarOferta
+          ? yerbas.filter(p => p.oferta)
+          : yerbas;
+      });
+    }
 
     this.carrito.productoEliminado$.subscribe(productoEliminado => {
       const original = this.productos.find(p => p.nombre === productoEliminado.nombre);
@@ -64,5 +70,20 @@ export class YerbaListadoComponent implements OnInit {
 
     producto.stock -= producto.cantidad;
     producto.cantidad = 0;
+  }
+
+  agregarRapido(producto: Yerba): void {
+    producto.cantidad = 1;
+    this.agregarCarrito(producto);
+  }
+
+  esFavorito(producto: Yerba): boolean {
+    return !!this.auth.currentUser?.wishlist.includes(producto.id);
+  }
+
+  alternarFavorito(producto: Yerba): void {
+    if (this.auth.currentUser) {
+      this.auth.toggleWishlist(producto.id);
+    }
   }
 }

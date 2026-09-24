@@ -1,69 +1,66 @@
-<div class="container py-5 mt-3" *ngIf="yerba">
-  <div class="row align-items-center gy-5 shadow-lg rounded p-4 bg-white custom-detalle">
+<div class="product-page" *ngIf="yerba">
+  <div class="product-page__crumbs container">
+    <a routerLink="/listado"><i class="bi bi-arrow-left"></i> Volver a yerbas</a>
+    <span>/</span><span>{{ yerba.tipo || 'Colección seleccionada' }}</span>
+  </div>
 
-    <!-- Imagen -->
-    <div class="col-md-5">
-      <img *ngIf="yerba.imagen; else noImage" [src]="yerba.imagen" [alt]="yerba.nombre"
-        class="img-fluid rounded-3 shadow-sm w-100 border" />
-      <ng-template #noImage>
-        <div class="bg-light d-flex justify-content-center align-items-center rounded-3 shadow-sm border"
-          style="height: 300px;">
-          <span class="text-muted">Sin imagen disponible</span>
+  <section class="container product-hero">
+    <div class="product-visual">
+      <div class="product-visual__wash"></div>
+      <span *ngIf="yerba.oferta" class="product-visual__badge"><i class="bi bi-stars"></i> Oferta especial</span>
+      <span class="product-visual__edition">Colección<br><strong>Serena</strong></span>
+      <img *ngIf="yerba.imagen; else noImage" [src]="yerba.imagen" [alt]="yerba.nombre">
+      <ng-template #noImage><div class="product-visual__empty"><i class="bi bi-leaf"></i><span>Imagen no disponible</span></div></ng-template>
+      <div class="product-visual__caption"><span>01</span><span>Yerba seleccionada · 500 g</span></div>
+    </div>
+
+    <div class="product-info">
+      <span class="eyebrow">Canarias · Selección uruguaya</span>
+      <h1>{{ yerba.nombre }}</h1>
+      <div class="product-info__rating"><span class="stars">★★★★★</span><span>4.8</span><a href="#opiniones">126 reseñas</a></div>
+
+      <div class="product-price" [class.product-price--sold-out]="yerba.stock === 0">
+        <ng-container *ngIf="yerba.oferta; else regularPrice">
+          <span class="product-price__old">{{ yerba.precio | currency }}</span>
+          <strong>{{ yerba.precio * 0.9 | currency }}</strong>
+          <span class="product-price__offer">−10%</span>
+        </ng-container>
+        <ng-template #regularPrice><strong>{{ yerba.precio | currency }}</strong></ng-template>
+      </div>
+
+      <div class="stock-state" [class.stock-state--empty]="yerba.stock === 0">
+        <i [class]="yerba.stock === 0 ? 'bi bi-x-circle' : 'bi bi-check-circle'"></i>
+        <span *ngIf="yerba.stock > 0"><strong>Disponible</strong> · {{ yerba.stock }} unidades listas para salir</span>
+        <span *ngIf="yerba.stock === 0"><strong>Sin stock por el momento</strong> · Volvemos a reponerla pronto</span>
+      </div>
+
+      <div class="product-description">
+        <p>{{ yerba.descripcion }}</p>
+      </div>
+
+      <div *ngIf="yerba.stock > 0; else soldOutActions" class="purchase-actions">
+        <div class="purchase-actions__quantity"><span>Cantidad</span><app-input-numero [(cantidad)]="yerba.cantidad" [min]="1" [max]="yerba.stock"></app-input-numero></div>
+        <button type="button" class="btn-primary purchase-actions__button" (click)="agregarCarrito(yerba)">Agregar al carrito <i class="bi bi-arrow-right"></i></button>
+      </div>
+      <ng-template #soldOutActions>
+        <div class="sold-out-actions">
+          <button type="button" class="btn-primary btn-primary--notify" (click)="avisarCuandoHayaStock()"><i class="bi bi-bell"></i>{{ avisoSolicitado ? 'Te avisaremos cuando vuelva' : 'Avisame cuando haya stock' }}</button>
+          <a routerLink="/listado" class="btn-secondary">Ver alternativas similares <i class="bi bi-arrow-up-right"></i></a>
         </div>
       </ng-template>
+
+      <div class="product-perks"><span><i class="bi bi-truck"></i><b>Envío gratis</b><small>Desde $35.000</small></span><span><i class="bi bi-shield-check"></i><b>Compra segura</b><small>Datos protegidos</small></span><span><i class="bi bi-arrow-repeat"></i><b>Ritual simple</b><small>Fácil reposición</small></span></div>
     </div>
+  </section>
 
-    <!-- Detalles -->
-    <div class="col-md-7">
-      <h2 class="text-success fw-bold display-6 mb-3">{{ yerba.nombre }}</h2>
-
-      <p class="mb-3 text-secondary fs-5">
-        <i class="bi bi-tag-fill me-2 text-success"></i><strong>Tipo:</strong> {{ yerba.tipo }}
-      </p>
-
-      <!-- Precio -->
-      <div class="mb-4">
-        <ng-container *ngIf="yerba.oferta; else precioNormal">
-          <span class="text-muted text-decoration-line-through me-2 fs-5">{{ yerba.precio | currency }}</span>
-          <span class="text-success fs-4 fw-bold">{{ yerba.precio * 0.9 | currency }}</span>
-          <span class="badge bg-danger ms-2 px-3 py-2 rounded-pill">Oferta</span>
-        </ng-container>
-        <ng-template #precioNormal>
-          <span class="text-success fs-4 fw-bold">{{ yerba.precio | currency }}</span>
-        </ng-template>
-      </div>
-
-      <!-- Stock -->
-      <div class="mb-4">
-        <span *ngIf="yerba.stock === 0" class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fs-6">
-          <i class="bi bi-x-octagon me-1"></i> Sin stock
-        </span>
-        <span *ngIf="yerba.stock > 0" class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fs-6">
-          <i class="bi bi-box-seam me-1"></i> Stock disponible: {{ yerba.stock }}
-        </span>
-      </div>
-      
-      <!-- Descripción -->
-      <div class="mb-4 descripcion-producto px-3 py-3 bg-light rounded border">
-        <h5 class="text-secondary mb-2">
-          <i class="bi bi-info-circle me-2 text-success"></i>Descripción del producto
-        </h5>
-        <p class="mb-0 text-dark fs-6">{{ yerba.descripcion }}</p>
-      </div>
-
-      <!-- Agregar al carrito -->
-      <div class="d-flex flex-column flex-sm-row align-items-center gap-3 mb-4">
-        <app-input-numero [(cantidad)]="yerba.cantidad" [min]="1" [max]="yerba.stock"></app-input-numero>
-        <button class="btn btn-lg btn-success px-4 shadow-sm" [disabled]="yerba.stock === 0"
-          (click)="agregarCarrito(yerba)">
-          <i class="bi bi-cart-plus me-2"></i> Agregar al carrito
-        </button>
-      </div>
-
-      <!-- Volver al listado -->
-      <a routerLink="/listado" class="btn btn-outline-secondary px-4">
-        <i class="bi bi-arrow-left me-2"></i> Volver al listado
-      </a>
+  <section class="container product-tabs" id="opiniones">
+    <div class="product-tabs__nav" role="tablist"><button type="button" [class.is-active]="activeTab === 'description'" (click)="activeTab = 'description'">Descripción</button><button type="button" [class.is-active]="activeTab === 'notes'" (click)="activeTab = 'notes'">Sabor y notas</button><button type="button" [class.is-active]="activeTab === 'prepare'" (click)="activeTab = 'prepare'">Preparación recomendada</button><button type="button" [class.is-active]="activeTab === 'reviews'" (click)="activeTab = 'reviews'">Reseñas <span>126</span></button></div>
+    <div class="product-tabs__content" [ngSwitch]="activeTab">
+      <div *ngSwitchCase="'description'"><h2>Una pausa que se siente.</h2><p>{{ yerba.descripcion }} Elegida por su equilibrio y su carácter amable, es una compañera noble para todos los días y todas las rondas.</p></div>
+      <div *ngSwitchCase="'notes'"><h2>Su perfil</h2><div class="notes"><span><i class="bi bi-circle-fill"></i><b>Intensidad</b><small>Suave · Media</small></span><span><i class="bi bi-circle-fill"></i><b>Amargor</b><small>Equilibrado</small></span><span><i class="bi bi-circle-fill"></i><b>Persistencia</b><small>Larga y redonda</small></span></div></div>
+      <div *ngSwitchCase="'prepare'"><h2>El mate ideal</h2><p>Usá agua entre 70° y 80°C. Incliná la yerba, agregá un poco de agua tibia en el hueco y dejá que repose antes de cebar. Así la ronda se disfruta de principio a fin.</p></div>
+      <div *ngSwitchCase="'reviews'"><h2>Lo que dice la ronda</h2><p class="review-quote">“Suave, aromática y muy rendidora. Se convirtió en mi yerba de todos los días.” <strong>— Julieta M. · Compra verificada</strong></p></div>
     </div>
-  </div>
+  </section>
+  <div class="container"><app-reviews [productId]="yerba.id"></app-reviews></div>
 </div>

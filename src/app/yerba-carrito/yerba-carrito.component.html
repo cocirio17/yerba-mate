@@ -1,67 +1,25 @@
-<div class="container my-5">
-  <h2 class="text-center mb-5 display-6 text-success">🛒 Carrito de Compras</h2>
+<main class="cart-page">
+  <div class="container">
+    <div class="cart-page__intro"><div><span class="eyebrow">Tu selección</span><h1>El carrito<br><em>de la ronda.</em></h1></div><a routerLink="/listado" class="text-link"><i class="bi bi-arrow-left"></i> Seguir comprando</a></div>
 
-  <!-- Usamos 'as lista' para capturar el resultado del async -->
-  <div *ngIf="(carroLista$ | async) as lista">
-    <ng-container *ngIf="lista.length > 0; else carritoVacio">
-
-      <div class="card shadow border-0">
-        <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0">
-            <thead class="table-success text-center">
-              <tr>
-                <th>Producto</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Subtotal</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of lista" class="text-center">
-                <td class="fw-semibold">{{ item.nombre }}</td>
-                <td>{{ item.precio | currency }}</td>
-                <td>{{ item.cantidad }}</td>
-                <td class="text-success fw-bold">{{ item.precio * item.cantidad | currency }}</td>
-                <td>
-                  <button class="btn btn-sm btn-outline-danger rounded-circle" (click)="eliminarProducto(item)"
-                    title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <div *ngIf="(carroLista$ | async) as lista">
+      <ng-container *ngIf="lista.length > 0; else carritoVacio">
+        <section class="shipping-progress"><div class="shipping-progress__copy"><i class="bi bi-truck"></i><span *ngIf="total < shippingGoal">Te faltan <strong>{{ shippingGoal - total | currency }}</strong> para obtener envío gratis</span><span *ngIf="total >= shippingGoal"><strong>¡Envío gratis desbloqueado!</strong> Tu ronda viaja por nuestra cuenta.</span></div><div class="shipping-progress__track"><span [style.width.%]="progress"></span></div></section>
+        <div class="cart-layout">
+          <section class="cart-items"><div class="cart-items__header"><span>{{ lista.length }} productos</span><button type="button" class="subtle-action" (click)="vaciarCarrito()"><i class="bi bi-trash3"></i> Vaciar carrito</button></div>
+            <article class="cart-item" *ngFor="let item of lista">
+              <div class="cart-item__image"><img [src]="item.imagen" [alt]="item.nombre"></div>
+              <div class="cart-item__info"><span class="cart-item__type">{{ item.tipo || 'Selección de la casa' }}</span><h2>{{ item.nombre }}</h2><span class="cart-item__unit">{{ item.precio | currency }} por unidad</span></div>
+              <div class="cart-item__quantity"><span>Cantidad</span><div class="quantity-control"><button type="button" (click)="cambiarCantidad(item, -1)" [disabled]="item.cantidad <= 1" aria-label="Restar"><i class="bi bi-dash"></i></button><b>{{ item.cantidad }}</b><button type="button" (click)="cambiarCantidad(item, 1)" aria-label="Sumar"><i class="bi bi-plus"></i></button></div></div>
+              <strong class="cart-item__subtotal">{{ item.precio * item.cantidad | currency }}</strong>
+              <button type="button" class="remove-item" (click)="eliminarProducto(item)" aria-label="Eliminar producto"><i class="bi bi-x-lg"></i></button>
+            </article>
+          </section>
+          <aside class="cart-summary"><span class="eyebrow">Resumen</span><h2>Tu pedido</h2><div class="cart-summary__line"><span>Subtotal</span><strong>{{ total | currency }}</strong></div><div class="cart-summary__line"><span>Envío</span><strong>{{ total >= shippingGoal ? 'Gratis' : 'A calcular' }}</strong></div><div class="cart-summary__total"><span>Total</span><strong>{{ total | currency }}</strong></div><a *ngIf="showBuyButton" routerLink="/comprar" class="btn-primary btn-primary--full">Ir al checkout <i class="bi bi-arrow-right"></i></a><small><i class="bi bi-lock"></i> Checkout seguro y protegido</small></aside>
         </div>
-
-        <div class="card-footer bg-light d-flex justify-content-between align-items-center py-3 px-4 flex-wrap gap-2">
-          <button class="btn btn-outline-danger" (click)="vaciarCarrito()">
-            <i class="bi bi-x-circle me-1"></i> Vaciar carrito
-          </button>
-
-          <h5 class="mb-0 text-success fw-bold me-auto">
-            Total: {{ total | currency }}
-          </h5>
-
-          <!-- Botón de Comprar -->
-          <a *ngIf="showBuyButton" routerLink="/comprar" class="btn btn-success">
-            <i class="bi bi-bag-check me-1"></i> Comprar
-          </a>
-        </div>
-      </div>
-
-    </ng-container>
-  </div>
-
-  <!-- Template si el carrito está vacío -->
-  <ng-template #carritoVacio>
-    <div class="alert alert-info text-center py-5 shadow-sm mt-4">
-      <i class="bi bi-cart-x display-4 d-block mb-3"></i>
-      <p class="lead">Tu carrito está vacío</p>
-      <p>¡Agregá productos para comenzar!</p>
-      <a routerLink="/home" class="btn btn-outline-success mt-2">
-        <i class="bi bi-arrow-left me-1"></i> Volver al Inicio
-      </a>
+        <section class="cross-sell"><div><span class="eyebrow">Completá el ritual</span><h2>Los materos también compraron...</h2></div><a routerLink="/listado" class="text-link">Explorar accesorios <i class="bi bi-arrow-up-right"></i></a><div class="cross-sell__cards"><article><div><i class="bi bi-circle"></i></div><span>Accesorios</span><h3>Bombillas para compartir</h3><a routerLink="/listado">Ver selección <i class="bi bi-arrow-right"></i></a></article><article><div><i class="bi bi-cup-hot"></i></div><span>Para llevar</span><h3>El termo de cada ronda</h3><a routerLink="/listado">Ver selección <i class="bi bi-arrow-right"></i></a></article><article><div><i class="bi bi-gift"></i></div><span>Regalos</span><h3>Armá tu ritual completo</h3><a routerLink="/listado">Ver selección <i class="bi bi-arrow-right"></i></a></article></div></section>
+      </ng-container>
     </div>
-  </ng-template>
-</div>
+    <ng-template #carritoVacio><section class="cart-empty"><span><i class="bi bi-bag"></i></span><h2>Tu ronda todavía no empezó</h2><p>Explorá nuestra selección y encontrá algo para compartir.</p><a routerLink="/listado" class="btn-primary">Explorar yerbas <i class="bi bi-arrow-right"></i></a></section></ng-template>
+  </div>
+</main>

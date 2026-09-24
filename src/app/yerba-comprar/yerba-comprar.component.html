@@ -1,48 +1,31 @@
-<div class="container my-5">
-  <h2 class="text-center text-success mb-4">🧾 Confirmar Compra</h2>
-
-  <!-- Carrito resumen -->
-  <app-yerba-carrito></app-yerba-carrito>
-
-  <!-- Formulario cliente -->
-  <form [formGroup]="clienteForm" (ngSubmit)="confirmarCompra()" class="cliente-form bg-light p-4 rounded shadow-sm">
-    <h4 class="mb-4">Datos del Cliente</h4>
-
-    <div class="row g-3">
-      <div class="col-md-6">
-        <input class="form-control" formControlName="nombre" placeholder="Nombre *" />
-      </div>
-      <div class="col-md-6">
-        <input class="form-control" formControlName="apellido" placeholder="Apellido *" />
-      </div>
-      <div class="col-md-6">
-        <input class="form-control" formControlName="dni" placeholder="DNI *" />
-      </div>
-      <div class="col-md-6">
-        <input class="form-control" formControlName="email" placeholder="Email *" />
-      </div>
-      <div class="col-md-6">
-        <input class="form-control" formControlName="telefono" placeholder="Teléfono *" />
-      </div>
-      <div class="col-md-6">
-        <input class="form-control" formControlName="direccion" placeholder="Dirección *" />
-      </div>
-      <div class="col-md-6">
-        <select class="form-select" formControlName="formaPago">
-          <option value="">Seleccionar forma de pago *</option>
-          <option value="efectivo">Efectivo</option>
-          <option value="tarjeta">Tarjeta de crédito</option>
-          <option value="transferencia">Transferencia bancaria</option>
-          <option value="mercadopago">Mercado Pago</option>
-        </select>
-      </div>
-      <div class="col-md-12">
-        <textarea class="form-control" formControlName="comentario" rows="3" placeholder="Comentario (opcional)"></textarea>
-      </div>
-    </div>
-
-    <button type="submit" class="btn btn-success mt-4 px-4">
-      <i class="bi bi-check2-circle me-2"></i> Confirmar Compra
-    </button>
-  </form>
-</div>
+<main class="checkout-page">
+  <div class="checkout-layout container">
+    <section class="checkout-form">
+      <div class="checkout-form__top"><a routerLink="/carrito" class="back-link"><i class="bi bi-arrow-left"></i> Carrito</a><span class="checkout-brand">Yerba<em>Shop</em></span></div>
+      <div class="checkout-stepper"><div class="is-active"><b>1</b><span>Contacto</span></div><i></i><div [class.is-active]="step >= 2"><b>2</b><span>Envío</span></div><i></i><div [class.is-active]="step >= 3"><b>3</b><span>Pago</span></div></div>
+      <div class="checkout-heading"><span class="eyebrow">Paso {{ step }} de 3</span><h1>{{ step === 1 ? '¿A dónde enviamos tu ronda?' : step === 2 ? 'Contanos cómo recibirla' : 'Último paso, mate listo.' }}</h1><p>Completá tus datos para preparar tu pedido.</p></div>
+      <form [formGroup]="clienteForm" (ngSubmit)="avanzar()">
+        <ng-container *ngIf="step === 1">
+          <div class="field-row"><label class="field"><span>Nombre</span><input formControlName="nombre" placeholder="Tu nombre"><small *ngIf="campoInvalido('nombre')">Ingresá tu nombre</small></label><label class="field"><span>Apellido</span><input formControlName="apellido" placeholder="Tu apellido"><small *ngIf="campoInvalido('apellido')">Ingresá tu apellido</small></label></div>
+          <label class="field"><span>Email</span><input type="email" formControlName="email" placeholder="nombre@email.com"><small *ngIf="campoInvalido('email')">Ingresá un email válido</small></label>
+          <label class="field"><span>Teléfono</span><input formControlName="telefono" placeholder="Tu teléfono"><small *ngIf="campoInvalido('telefono')">Ingresá un teléfono válido</small></label>
+        </ng-container>
+        <ng-container *ngIf="step === 2">
+          <label class="field"><span>Dirección de entrega</span><input formControlName="direccion" placeholder="Calle y número"></label>
+          <label class="field"><span>DNI</span><input formControlName="dni" placeholder="Tu DNI"></label>
+          <div class="checkout-note"><i class="bi bi-truck"></i><span>Enviamos a todo el país. Los tiempos y costos se confirman según tu localidad.</span></div>
+        </ng-container>
+        <ng-container *ngIf="step === 3">
+          <label class="field"><span>Forma de pago</span><select formControlName="formaPago"><option value="">Seleccionar medio de pago</option><option value="tarjeta">Tarjeta de crédito o débito</option><option value="mercadopago">Mercado Pago</option><option value="transferencia">Transferencia bancaria</option></select></label>
+          <label class="field"><span>Comentario (opcional)</span><textarea formControlName="comentario" rows="3" placeholder="¿Algo que debamos saber?"></textarea></label>
+          <div class="trust-signals"><i class="bi bi-lock-fill"></i><span><strong>Tus datos están protegidos</strong><small>Compra segura con encriptación SSL</small></span><b>VISA · MASTERCARD · MP</b></div>
+        </ng-container>
+        <div class="checkout-actions"><button *ngIf="step > 1" type="button" class="back-step" (click)="step = step - 1"><i class="bi bi-arrow-left"></i> Atrás</button><button type="submit" class="btn-primary">{{ step === 3 ? 'Confirmar compra' : 'Continuar' }} <i class="bi bi-arrow-right"></i></button></div>
+      </form>
+    </section>
+    <aside class="checkout-summary" [class.checkout-summary--open]="summaryOpen">
+      <button type="button" class="summary-toggle" (click)="summaryOpen = !summaryOpen"><span>Resumen del pedido</span><strong>{{ total | currency }}</strong><i class="bi" [class.bi-chevron-down]="!summaryOpen" [class.bi-chevron-up]="summaryOpen"></i></button>
+      <div class="checkout-summary__content"><div class="checkout-summary__heading"><span class="eyebrow">Tu selección</span><h2>Resumen del pedido</h2></div><div class="checkout-summary__items"><div *ngFor="let item of carrito" class="summary-item"><div class="summary-item__image"><img [src]="item.imagen" [alt]="item.nombre"><b>{{ item.cantidad }}</b></div><span>{{ item.nombre }}<small>{{ item.tipo }}</small></span><strong>{{ item.precio * item.cantidad | currency }}</strong></div></div><div class="summary-line"><span>Subtotal</span><strong>{{ total | currency }}</strong></div><div class="summary-line"><span>Envío</span><strong>{{ total >= shippingGoal ? 'Gratis' : 'A calcular' }}</strong></div><div class="summary-total"><span>Total</span><strong>{{ total | currency }}</strong></div><p class="summary-guarantee"><i class="bi bi-heart"></i> Gracias por elegir compartir lo bueno.</p></div>
+    </aside>
+  </div>
+</main>

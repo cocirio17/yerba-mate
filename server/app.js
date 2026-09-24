@@ -1,0 +1,17 @@
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const config = require('./config/config');
+const errorHandler = require('./middlewares/errorHandler');
+const app = express();
+app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:4200' }));
+app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/products', require('./routes/products'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/reviews', require('./routes/reviews'));
+app.use(errorHandler);
+app.locals.config = config;
+module.exports = app;

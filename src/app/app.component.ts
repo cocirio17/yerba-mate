@@ -1,41 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { YerbaCarritoService } from './yerba-carrito.service';
+import { AuthService } from './auth.service';
+import { User } from './user.model';
+import { animate, style, transition, trigger } from '@angular/animations';
 
-/**
- * Componente raíz de la aplicación YerbaShop.
- * Gestiona el título, el estado del carrito desplegable y la cantidad de productos en él.
- */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: false,
   styleUrl: './app.component.scss'
+  ,animations: [trigger('routeAnimations', [transition('* <=> *', [style({ opacity: 0 }), animate('350ms ease-out', style({ opacity: 1 }))])])]
 })
 export class AppComponent {
-  /** Título de la aplicación (no se usa directamente, pero queda disponible) */
-  title: string = 'yerba-mate';
+  title = 'YerbaShop';
+  mostrarCarrito = false;
+  cantidadEnCarrito = 0;
+  isScrolled = false;
+  user: User | null = null;
 
-  /** Define si el carrito se muestra desplegado */
-  mostrarCarrito: boolean = false;
-
-  /** Cantidad total de productos en el carrito (actualizado vía observable) */
-  cantidadEnCarrito: number = 0;
-
-  /**
-   * Inyecta el servicio del carrito y se suscribe a los cambios en la cantidad total de productos.
-   * 
-   * @param carrito Servicio que gestiona el carrito de compras
-   */
-  constructor(public carrito: YerbaCarritoService) {
-    this.carrito.cantidadTotal$.subscribe(cant => {
-      this.cantidadEnCarrito = cant;
-    });
+  constructor(public carrito: YerbaCarritoService, public auth: AuthService) {
+    this.carrito.cantidadTotal$.subscribe(cantidad => this.cantidadEnCarrito = cantidad);
+    this.carrito.productoAgregado$.subscribe(() => this.mostrarCarrito = true);
+    this.auth.user$.subscribe(user => this.user = user);
   }
 
-  /**
-   * Alterna el estado visible del carrito (muestra/oculta).
-   */
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    this.isScrolled = window.scrollY > 24;
+  }
+
   toggleCarrito(): void {
     this.mostrarCarrito = !this.mostrarCarrito;
   }
+
+  logout(): void {
+    this.auth.logout();
+  }
+
+  prepareRoute(outlet: any): string { return outlet?.activatedRouteData?.['animation'] || ''; }
 }

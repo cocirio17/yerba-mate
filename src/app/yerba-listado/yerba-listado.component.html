@@ -1,55 +1,17 @@
-<div class="container my-4">
-  <div class="row g-4">
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let producto of productos">
-      <div class="card h-100 shadow-sm border-0 custom-card position-relative">
-        <!-- Badge de oferta -->
-        <span *ngIf="producto.oferta" class="badge bg-danger position-absolute top-0 start-0 m-2">
-          Oferta
-        </span>
-
-        <!-- Imagen -->
-        <img *ngIf="producto.imagen; else noImage" [src]="producto.imagen" [alt]="producto.nombre"
-          class="card-img-top product-img" />
-
-        <ng-template #noImage>
-          <div class="placeholder-img d-flex justify-content-center align-items-center">
-            <span class="text-muted">Sin imagen</span>
-          </div>
-        </ng-template>
-
-        <!-- Contenido -->
-        <div class="card-body d-flex flex-column justify-content-between">
-          <!-- Nombre -->
-          <h5 class="card-title">{{ producto.nombre }}</h5>
-
-          <!-- Stock -->
-          <div class="stock-badge mt-2">
-            <span *ngIf="producto.stock === 0"
-              class="badge bg-danger-subtle text-danger d-flex align-items-center gap-2 px-3 py-2 rounded-pill">
-              <i class="bi bi-x-octagon-fill"></i> Sin stock
-            </span>
-            <span *ngIf="producto.stock > 0"
-              class="badge bg-success-subtle text-success d-flex align-items-center gap-2 px-3 py-2 rounded-pill">
-              <i class="bi bi-check-circle-fill"></i> Stock disponible
-            </span>
-          </div>
-          <!-- Precio y oferta -->
-          <div class="mb-3">
-            <span *ngIf="producto.oferta; else precioNormal">
-              <span class="text-muted text-decoration-line-through me-2">{{ producto.precio | currency }}</span>
-              <span class="text-success fw-bold">$ {{ producto.precio * 0.9 | currency }}</span>
-            </span>
-            <ng-template #precioNormal>
-              <h6 class="text-success fw-bold">{{ producto.precio | currency }}</h6>
-            </ng-template>
-          </div>
-
-          <!-- Ver detalles del producto -->
-          <a class="btn btn-primary w-100 mt-auto custom-btn" [routerLink]="['/producto', producto.id]">
-            Ver detalles del producto
-          </a>
-        </div>
-      </div>
+<div class="product-grid">
+  <article class="product-card" *ngFor="let producto of productos">
+    <div class="product-card__visual">
+      <span *ngIf="producto.oferta" class="product-card__badge">-{{ producto.descuento_porcentaje || 10 }}% OFF</span>
+      <span *ngIf="producto.stock === 0" class="product-card__badge product-card__badge--dark">Sin stock</span>
+      <button *ngIf="auth.currentUser" type="button" class="product-card__favorite" [class.is-favorite]="esFavorito(producto)" (click)="alternarFavorito(producto)" [attr.aria-label]="esFavorito(producto) ? 'Quitar de favoritos' : 'Agregar a favoritos'"><i class="bi" [class.bi-heart-fill]="esFavorito(producto)" [class.bi-heart]="!esFavorito(producto)"></i></button>
+      <img *ngIf="producto.imagen; else noImage" [src]="producto.imagen" [alt]="producto.nombre" loading="lazy">
+      <ng-template #noImage><div class="product-card__placeholder"><i class="bi bi-leaf"></i></div></ng-template>
+      <button *ngIf="producto.stock > 0" type="button" class="product-card__quick" (click)="agregarRapido(producto)"><i class="bi bi-plus"></i> Agregar rápido</button>
     </div>
-  </div>
+    <div class="product-card__body">
+      <span class="product-card__type">{{ producto.tipo || 'Selección de la casa' }}</span>
+      <a class="product-card__name" [routerLink]="['/producto', producto.id]">{{ producto.nombre }}</a>
+      <div class="product-card__footer"><span class="product-card__prices"><del *ngIf="producto.oferta">{{ producto.precio | currency }}</del><span class="product-card__price">{{ (producto.oferta ? producto.precio * (1 - (producto.descuento_porcentaje || 10) / 100) : producto.precio) | currency }}</span></span><a [routerLink]="['/producto', producto.id]" class="product-card__arrow" aria-label="Ver producto"><i class="bi bi-arrow-up-right"></i></a></div>
+    </div>
+  </article>
 </div>

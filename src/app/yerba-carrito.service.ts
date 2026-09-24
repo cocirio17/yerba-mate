@@ -23,6 +23,9 @@ export class YerbaCarritoService {
   /** Evento que se dispara cuando se elimina un producto (útil para restaurar stock) */
   public productoEliminado$: Subject<Yerba> = new Subject<Yerba>();
 
+  /** Evento para abrir el carrito lateral después de una adición */
+  public productoAgregado$: Subject<Yerba> = new Subject<Yerba>();
+
   constructor() {}
 
   /**
@@ -41,6 +44,7 @@ export class YerbaCarritoService {
     }
 
     this._actualizarEstado();
+    this.productoAgregado$.next(producto);
   }
 
   /**
@@ -52,6 +56,20 @@ export class YerbaCarritoService {
   eliminarProducto(producto: Yerba): void {
     this.productoEliminado$.next(producto);
     this._listaCarrito = this._listaCarrito.filter(p => p.nombre !== producto.nombre);
+    this._actualizarEstado();
+  }
+
+  actualizarCantidad(producto: Yerba, cantidad: number): void {
+    const index = this._listaCarrito.findIndex(p => p.nombre === producto.nombre);
+    if (index === -1) return;
+
+    const nuevaCantidad = Math.max(1, Math.floor(cantidad));
+    const diferencia = nuevaCantidad - this._listaCarrito[index].cantidad;
+    this._listaCarrito[index].cantidad = nuevaCantidad;
+
+    if (diferencia < 0) {
+      this.productoEliminado$.next({ ...producto, cantidad: Math.abs(diferencia) });
+    }
     this._actualizarEstado();
   }
 

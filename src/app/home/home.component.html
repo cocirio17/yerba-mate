@@ -1,15 +1,32 @@
-<div class="container my-5 seccion-oferta p-4 rounded-4">
-  <div class="text-center mb-4">
-    <h2 class="titulo-oferta">
-      <i class="bi bi-fire me-2 text-warning fs-3"></i>
-      Productos en Oferta
-      <div class="subtitulo">¡Aprovechá los mejores precios de Yerba mates!</div>
-    </h2>
+<section class="home-hero">
+  <div class="home-hero__texture"></div>
+  <div class="container home-hero__content">
+    <span class="eyebrow eyebrow--light">Una pausa. Un ritual. Un mate.</span>
+    <h1>El ritual del mate,<br><em>en tu puerta.</em></h1>
+    <p>Yerbas seleccionadas para que cada cebada tenga su propio momento.</p>
+    <a routerLink="/listado" class="btn-primary">Descubrir la colección <i class="bi bi-arrow-up-right"></i></a>
+    <div class="home-hero__note"><span class="home-hero__line"></span><span>Desde la tierra colorada<br>hasta tu ronda.</span></div>
   </div>
-  <app-yerba-listado [productos]="productosEnOferta" [filtrarOferta]="true">
-  </app-yerba-listado>
+  <div class="home-hero__stamp"><span>Hecho para</span><strong>compartir</strong><i class="bi bi-arrow-down"></i></div>
+</section>
 
+<section class="trust-strip"><div class="container trust-strip__inner"><span><i class="bi bi-box-seam"></i><strong>Envíos a todo el país</strong></span><span><i class="bi bi-stars"></i><strong>Selección curada</strong></span><span><i class="bi bi-heart"></i><strong>Compra con propósito</strong></span><span><i class="bi bi-shield-check"></i><strong>Pago seguro</strong></span></div></section>
 
-  <app-consejos>
-  </app-consejos>
-</div>
+<section class="section section--products" id="coleccion">
+  <div class="container">
+    <div class="section-heading"><div><span class="eyebrow">Elegidos para vos</span><h2>La ronda empieza<br><em>por acá.</em></h2></div><a routerLink="/listado" class="text-link">Ver toda la colección <i class="bi bi-arrow-up-right"></i></a></div>
+    <app-yerba-listado [productos]="productosEnOferta" [filtrarOferta]="true"></app-yerba-listado>
+  </div>
+</section>
+
+<section class="ritual-section" id="ritual">
+  <div class="container ritual-grid"><div class="ritual-grid__image"><img src="assets/img/Nosotros.jpg" alt="Personas compartiendo un mate" loading="lazy"><span class="ritual-grid__number">01</span></div><div class="ritual-grid__copy"><span class="eyebrow">Nuestra manera</span><h2>Más que una yerba,<br><em>una forma de estar.</em></h2><p>Creemos que el mate no se toma: se comparte. Por eso elegimos productores, historias y sabores que hacen de cada ronda un momento para quedarse.</p><div class="ritual-values"><div><strong>01</strong><span>Origen real<br><small>De la tierra a tu mesa</small></span></div><div><strong>02</strong><span>Comunidad<br><small>Siempre hay lugar para uno más</small></span></div><div><strong>03</strong><span>Consciente<br><small>Elegimos mejor, no más</small></span></div></div><a routerLink="/ritual" class="text-link">Descubrir el ritual <i class="bi bi-arrow-up-right"></i></a></div></div>
+</section>
+
+<section class="section tips-section" id="consejos">
+  <div class="container"><div class="section-heading"><div><span class="eyebrow">El saber matero</span><h2>Pequeños secretos,<br><em>grandes mates.</em></h2></div><a routerLink="/consejos" class="text-link">Leer más tips <i class="bi bi-arrow-up-right"></i></a></div><div class="tips-grid"><article class="tip-card tip-card--large"><img src="assets/img/Pindare.jpg" alt="Yerba mate y accesorios" loading="lazy"><div><span>Rituales</span><h3>Cómo preparar un mate que dura toda la ronda</h3><a href="#consejos">Leer consejo <i class="bi bi-arrow-up-right"></i></a></div></article><article class="tip-card"><div class="tip-card__illustration tip-card__illustration--sage"><i class="bi bi-droplet-half"></i></div><div><span>Guía rápida</span><h3>La temperatura justa del agua</h3><a href="#consejos">Leer consejo <i class="bi bi-arrow-up-right"></i></a></div></article><article class="tip-card"><div class="tip-card__illustration tip-card__illustration--sand"><i class="bi bi-chat-heart"></i></div><div><span>Cultura</span><h3>El mate: nuestro idioma universal</h3><a href="#consejos">Leer consejo <i class="bi bi-arrow-up-right"></i></a></div></article></div></div>
+</section>
+
+<section class="social-proof"><div class="container"><div class="social-proof__heading"><span class="eyebrow">La ronda habla</span><h2>Lo que dicen<br><em>quienes ya probaron.</em></h2><div class="social-proof__rating"><strong>4.9</strong><span>★★★★★<small>+1200 rituales compartidos</small></span></div></div><div class="testimonial-grid"><article><div class="stars">★★★★★</div><p>“La selección es increíble. Se nota el cuidado desde que abrís el paquete hasta el último mate.”</p><strong>— Sofía M. <small>Compra verificada</small></strong></article><article><div class="stars">★★★★★</div><p>“Encontré mi yerba favorita y el envío llegó rapidísimo. Ya armé mi próxima ronda.”</p><strong>— Martín R. <small>Compra verificada</small></strong></article><article><div class="stars">★★★★★</div><p>“YerbaShop entiende que el mate es un momento, no solo un producto. Volvería siempre.”</p><strong>— Cami G. <small>Compra verificada</small></strong></article></div></div></section>
+
+<section class="instagram-section"><div class="container instagram-section__heading"><div><span class="eyebrow">Seguinos la ronda</span><h2>&#64;yerbash<span>op</span></h2></div><a href="https://instagram.com" target="_blank" rel="noreferrer" class="text-link">Ver en Instagram <i class="bi bi-arrow-up-right"></i></a></div><div class="instagram-grid"><a href="https://instagram.com" target="_blank" rel="noreferrer"><img src="assets/img/Canarias-Edición-Especial-500grs.jpg" alt="Yerba seleccionada"><i class="bi bi-instagram"></i></a><a href="https://instagram.com" target="_blank" rel="noreferrer"><img src="assets/img/yerba-andresito.jpg" alt="Yerba Andresito"><i class="bi bi-instagram"></i></a><a href="https://instagram.com" target="_blank" rel="noreferrer"><img src="assets/img/Yerba-Cosmico.png" alt="Yerba Cósmico"><i class="bi bi-instagram"></i></a><a href="https://instagram.com" target="_blank" rel="noreferrer"><img src="assets/img/yerba-playadito.jpg" alt="Yerba Playadito"><i class="bi bi-instagram"></i></a></div></section>

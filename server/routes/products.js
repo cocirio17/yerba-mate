@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const controller = require('../controllers/productController');
+const { authenticate, verifyAdmin } = require('../middlewares/auth');
+const { imageUpload } = require('../middlewares/upload');
+router.get('/', controller.list);
+router.get('/:id', controller.detail);
+router.post('/', authenticate, verifyAdmin, imageUpload.single('imagen'), controller.create);
+router.put('/:id', authenticate, verifyAdmin, imageUpload.single('imagen'), controller.update);
+router.delete('/:id', authenticate, verifyAdmin, controller.remove);
+module.exports = router;

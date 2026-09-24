@@ -1,122 +1,64 @@
-<!-- Encabezado superior -->
-<div class="top-bar text-center py-3">
-  <a class="navbar-brand d-inline-flex align-items-center justify-content-center" routerLink="/">
-    <img src="assets/img/logo.png" alt="Logo Yerba" width="120" height="120" class="me-2 logo-img">
-    <span class="brand-title">YerbaShop</span>
-  </a>
+<div class="announcement-bar">
+  <span><i class="bi bi-truck me-2"></i>Envíos gratis desde $35.000</span>
+  <span class="announcement-bar__desktop">·</span>
+  <span class="announcement-bar__desktop">Preparado con origen y cariño</span>
 </div>
 
-<!-- Barra de navegación inferior -->
-<nav class="navbar navbar-expand-lg navbar-white custom-navbar py-2">
-  <div class="container justify-content-between">
+<header class="site-header" [class.site-header--scrolled]="isScrolled">
+  <nav class="container site-nav" aria-label="Navegación principal">
+    <a class="brand" routerLink="/" aria-label="YerbaShop, inicio">
+      <img class="brand__logo" src="assets/img/logo.png" alt="YerbaShop">
+      <span><strong>Yerba</strong><em>Shop</em></span>
+    </a>
 
-    <!-- Menú hamburguesa -->
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Enlaces -->
-    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-      <ul class="navbar-nav gap-4">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/" routerLinkActive="active">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/listado" routerLinkActive="active">Productos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/contacto" routerLinkActive="active">Contacto</a>
-        </li>
-      </ul>
+    <div class="site-nav__links">
+      <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+      <a routerLink="/listado" routerLinkActive="is-active">Yerbas</a>
+      <a routerLink="/ritual" routerLinkActive="is-active">El ritual</a>
+      <a routerLink="/consejos" routerLinkActive="is-active">Consejos</a>
     </div>
 
-    <!-- Carrito -->
-    <div class="d-flex align-items-center gap-3 position-relative">
-      <button class="btn btn-outline-light position-relative" (click)="toggleCarrito()" title="Carrito de compras">
-        <i class="bi bi-cart3 fs-5"></i>
-        <span *ngIf="cantidadEnCarrito > 0"
-          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-          {{ cantidadEnCarrito }}
-        </span>
+    <div class="site-nav__actions">
+      <a class="nav-icon nav-icon--desktop" routerLink="/contacto" aria-label="Contacto"><i class="bi bi-chat-heart"></i></a>
+      <a class="account-trigger" [routerLink]="user ? '/mi-cuenta' : '/login'" [attr.aria-label]="user ? 'Mi cuenta' : 'Iniciar sesión'"><span *ngIf="user; else loginIcon" class="account-trigger__avatar">{{ user.nombre.charAt(0).toUpperCase() }}</span><ng-template #loginIcon><i class="bi bi-person"></i></ng-template><span class="account-trigger__label">{{ user ? 'Mi cuenta' : 'Ingresar' }}</span></a>
+      <a *ngIf="user?.rol === 'admin'" class="nav-icon" routerLink="/admin" aria-label="Administración"><i class="bi bi-speedometer2"></i></a>
+      <button class="cart-trigger" type="button" (click)="toggleCarrito()" aria-label="Abrir carrito">
+        <i class="bi bi-bag"></i>
+        <span>Carrito</span>
+        <b *ngIf="cantidadEnCarrito > 0">{{ cantidadEnCarrito }}</b>
       </button>
-
-      <!-- Carrito desplegable -->
-      <div *ngIf="mostrarCarrito" class="position-absolute" style="top: 100%; right: 0; z-index: 1050; margin-top: 0.5rem;">
-        <div class="card shadow-sm border-0" style="width: 300px;">
-          <div class="card-header bg-success text-white py-2 d-flex justify-content-between align-items-center">
-            <span>Carrito</span>
-            <button class="btn-close btn-close-white btn-sm" (click)="mostrarCarrito = false" aria-label="Cerrar"></button>
-          </div>
-          <div style="max-height: 340px; overflow-y: auto;">
-            <div class="card-body p-3" *ngIf="carrito.listaCarrito.value.length > 0; else carritoVacio">
-              <div *ngFor="let item of carrito.listaCarrito.value" class="d-flex justify-content-between small mb-2">
-                <div>
-                  <strong>{{ item.nombre }}</strong><br>
-                  <span class="text-muted">x{{ item.cantidad }}</span>
-                </div>
-                <span>{{ item.precio * item.cantidad | currency }}</span>
-              </div>
-              <hr class="my-2">
-              <a routerLink="/carrito" class="btn btn-sm btn-outline-success w-100">Ir al carrito</a>
-            </div>
-            <ng-template #carritoVacio>
-              <p class="text-muted text-center small py-3">Tu carrito está vacío</p>
-            </ng-template>
-          </div>
-        </div>
-      </div>
+      <button class="menu-trigger" type="button" aria-label="Menú"><i class="bi bi-list"></i></button>
     </div>
+  </nav>
+</header>
 
-  </div>
-</nav>
+<main [@routeAnimations]="prepareRoute(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</main>
 
-
-<!-- ---------------contenido---------- -->
-
-<div class="contenedor-listado">
-  <router-outlet ></router-outlet>
-</div>
-
-<!-- ---------footer----------------- -->
-<footer class="custom-footer bg-light text-dark pt-5 pb-4 mt-5 border-top">
-  <div class="container">
-    <div class="row gy-4">
-
-      <!-- Marca y descripción -->
-      <div class="col-md-4">
-        <h5 class="fw-bold text-success">YerbaMatesApp</h5>
-        <p class="text-muted small">
-          Tu lugar para encontrar las mejores yerbas, mates, bombillas y más. Nos apasiona el mate, como a vos.
-        </p>
-      </div>
-
-      <!-- Navegación -->
-      <div class="col-md-4">
-        <h6 class="fw-bold text-success mb-3">Navegación</h6>
-        <ul class="list-unstyled footer-links">
-          <li><a routerLink="/" routerLinkActive="active">Inicio</a></li>
-          <li><a routerLink="/listado" routerLinkActive="active">Productos</a></li>
-          <li><a routerLink="/contacto" routerLinkActive="active">Contacto</a></li>
-        </ul>
-      </div>
-
-      <!-- Redes sociales -->
-      <div class="col-md-4">
-        <h6 class="fw-bold text-success mb-3">Seguinos</h6>
-        <div class="d-flex gap-3">
-          <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="social-icon"><i class="bi bi-whatsapp"></i></a>
-        </div>
-      </div>
-
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div>
+      <a class="brand brand--footer" routerLink="/"><img class="brand__logo" src="assets/img/logo.png" alt="YerbaShop"></a>
+      <p>El ritual del mate, elegido para vos.<br>Origen, calidad y comunidad.</p>
     </div>
-
-    <hr class="my-4" />
-
-    <p class="text-center small text-muted mb-0">
-      © 2025 <strong>YerbaMatesApp</strong> — Todos los derechos reservados.
-    </p>
+    <div><h3>Explorá</h3><a routerLink="/listado">Todas las yerbas</a><a routerLink="/consejos">Consejos materos</a><a routerLink="/ritual">Nuestra historia</a></div>
+    <div><h3>Ayuda</h3><a routerLink="/contacto">Contacto</a><a routerLink="/contacto">Envíos y cambios</a><a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram <i class="bi bi-arrow-up-right"></i></a><div class="footer-socials"><a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="bi bi-instagram"></i></a><a href="https://tiktok.com" target="_blank" rel="noreferrer" aria-label="TikTok"><i class="bi bi-tiktok"></i></a><a href="https://wa.me/5491112345678" target="_blank" rel="noreferrer" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a></div></div>
+    <div class="site-footer__newsletter"><h3>Una pausa en tu inbox</h3><p>Recibí rituales, lanzamientos y un 10% en tu primera compra.</p><div class="newsletter-form"><input type="email" placeholder="Tu email" aria-label="Tu email"><button type="button" aria-label="Suscribirme"><i class="bi bi-arrow-right"></i></button></div></div>
   </div>
+  <div class="container site-footer__bottom"><span>© 2026 YerbaShop</span><span>Hecho para compartir.</span></div>
 </footer>
+
+<div class="cart-backdrop" *ngIf="mostrarCarrito" (click)="toggleCarrito()"></div>
+<aside class="side-cart" [class.side-cart--open]="mostrarCarrito" aria-label="Carrito de compras" [attr.aria-hidden]="!mostrarCarrito">
+  <div class="side-cart__header"><div><span class="eyebrow">Tu selección</span><h2>Carrito <small>{{ cantidadEnCarrito }} {{ cantidadEnCarrito === 1 ? 'producto' : 'productos' }}</small></h2></div><button type="button" class="close-cart" (click)="toggleCarrito()" aria-label="Cerrar carrito"><i class="bi bi-x-lg"></i></button></div>
+  <div class="side-cart__body" *ngIf="carrito.listaCarrito.value.length > 0; else carritoVacio">
+    <div class="side-cart__item" *ngFor="let item of carrito.listaCarrito.value">
+      <div class="side-cart__item-image"><img [src]="item.imagen" [alt]="item.nombre"></div>
+      <div class="side-cart__item-info"><strong>{{ item.nombre }}</strong><span>{{ item.tipo }}</span><div><b>{{ item.precio | currency }}</b><small>× {{ item.cantidad }}</small></div></div>
+    </div>
+    <div class="side-cart__shipping"><i class="bi bi-truck"></i><span>Te faltan <strong>{{ carrito.obtenerTotal() < 35000 ? (35000 - carrito.obtenerTotal() | currency) : '$0' }}</strong> para envío gratis</span></div>
+  </div>
+  <ng-template #carritoVacio><div class="side-cart__empty"><span><i class="bi bi-bag"></i></span><h3>Tu ritual empieza acá</h3><p>Sumá tus favoritos y prepará el próximo mate.</p><a routerLink="/listado" (click)="toggleCarrito()">Explorar yerbas <i class="bi bi-arrow-up-right"></i></a></div></ng-template>
+  <div class="side-cart__footer" *ngIf="carrito.listaCarrito.value.length > 0"><div><span>Total</span><strong>{{ carrito.obtenerTotal() | currency }}</strong></div><a routerLink="/carrito" (click)="toggleCarrito()" class="btn-primary btn-primary--full">Finalizar compra <i class="bi bi-arrow-right"></i></a><small>Impuestos incluidos · Compra segura</small></div>
+</aside>
